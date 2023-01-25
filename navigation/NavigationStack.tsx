@@ -1,49 +1,22 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen } from '../screen/LoginScreen';
-import { Loading } from '../components/Loading';
-import { NavigationTab } from './NavigationTab';
-import { AlumnoDetailScreen } from '../screen/AlumnoDetailScreen';
+import { HomeScreen } from '../screen/HomeScreen';
+import { PerfilScreen } from '../screen/PerfilScreen';
 
 
-export type AlumnosStackParams = {
-    AlumnoDetailScreen: { item: any }
-    HomeScreen: undefined,
-    LoginScreen: undefined,
-}
 
-
-const Stack = createNativeStackNavigator<AlumnosStackParams>();
+const Stack = createNativeStackNavigator();
 
 export const NavigationStack = () => {
-
-    const { status } = useContext( AuthContext )
-
-    if( status === 'checking' ) return <Loading />
-
     return (
         <Stack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown: false,
+                
             }}
         >
-
-            {
-                (status === 'authenticated') 
-                    ? (
-                        <>
-                            <Stack.Screen name="HomeScreen" component={NavigationTab} />
-                            <Stack.Screen name="AlumnoDetailScreen" component={AlumnoDetailScreen} />
-                        </>
-                    ) : (
-                        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-                    )
-            }
-
-            
-            
+            <Stack.Screen name="HomeScreen" component={HomeScreen} /> 
+            <Stack.Screen name="PerfilScreen" component={PerfilScreen} />
         </Stack.Navigator>
     );
 }
